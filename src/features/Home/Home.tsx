@@ -85,29 +85,48 @@ export default function HomeComponent() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="">
       <main className="container mx-auto px-4 py-8">
+        {/* Header Section */}
+        <div className="mb-6 text-center flex flex-col items-center gap-4">
+          <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl">
+            Finding Videos to{" "}
+            <span className="text-blue-500 font-bold">Learn Easy</span>
+          </h1>
+          <p className="text-gray-500 text-base sm:text-lg md:text-2xl max-w-2xl">
+            Over a million students watch our free videos to help them with
+            their homework
+          </p>
+        </div>
+
+        {/* Search Filters */}
         <div className="mb-8">
           <SearchFilters onFilter={handleFilter} />
         </div>
 
-        <div className="mb-4 flex justify-between items-center">
+        {/* Results Info and Reset Button */}
+        <div className="mb-4 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm text-[#6B7280]">
             {filteredVideos.length} results found
           </p>
           {filteredVideos.length !== videosList.length && (
-            <Button variant="outline" onClick={handleReset}>
+            <Button
+              variant="outline"
+              onClick={handleReset}
+              className="mt-2 sm:mt-0"
+            >
               Reset Filters
             </Button>
           )}
         </div>
 
+        {/* Category Buttons */}
         {filteredVideos.length > 0 && (
           <div className="mb-8">
-            <div className="scrollbar-hide -mx-2 flex space-x-2 overflow-x-auto px-2 pb-2">
+            <div className="scrollbar-hide flex space-x-2 overflow-x-auto px-2 pb-2">
               <Button
                 variant={selectedCategory === "All" ? "primary" : "outline"}
-                className="shrink-0"
+                className="shrink-0 min-w-[80px]"
                 onClick={() => setSelectedCategory("All")}
               >
                 All
@@ -120,7 +139,7 @@ export default function HomeComponent() {
                   variant={
                     selectedCategory === category ? "primary" : "outline"
                   }
-                  className="shrink-0"
+                  className="shrink-0 min-w-[80px]"
                   onClick={() => setSelectedCategory(category)}
                 >
                   {category}
@@ -130,6 +149,7 @@ export default function HomeComponent() {
           </div>
         )}
 
+        {/* Course Grid or Loading Indicator */}
         {displayedVideos.length > 0 || isLoading ? (
           <CourseGrid
             videos={displayedVideos.filter(
@@ -148,6 +168,7 @@ export default function HomeComponent() {
           </div>
         )}
 
+        {/* Load More Button */}
         {filteredVideos.length > displayedVideos.length && !isLoading && (
           <div className="mt-8 text-center">
             <Button variant="primary" size="lg" onClick={handleLoadMore}>
