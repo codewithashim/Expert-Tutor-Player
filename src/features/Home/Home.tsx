@@ -16,6 +16,24 @@ export default function HomeComponent() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const sendHeight = () => {
+      const height = document.body.scrollHeight;
+      window.parent.postMessage({ type: "resizeIframe", height }, "*");
+    };
+
+    // Send height on initial load
+    sendHeight();
+
+    // Adjust height on window resize
+    window.addEventListener("resize", sendHeight);
+
+    return () => {
+      // Cleanup the event listener on unmount
+      window.removeEventListener("resize", sendHeight);
+    };
+  }, []);
+
+  useEffect(() => {
     setIsLoading(true);
     const timer = setTimeout(() => {
       const startIndex = 0;
