@@ -86,7 +86,7 @@ export default function HomeComponent() {
 
   return (
     <div className="">
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 mt-[50px]">
         {/* Header Section */}
         <div className="mb-6 text-center flex flex-col items-center gap-4">
           <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl">
