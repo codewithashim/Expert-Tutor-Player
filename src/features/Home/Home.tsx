@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SearchFilters } from "./@component/search-filters";
 import { CourseGrid } from "./@component/course-grid";
 import { videosList } from "@/constents/data/videolist";
+import SubjectGrid from "./@component/subject-grid";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -176,6 +177,10 @@ export default function HomeComponent() {
             </Button>
           </div>
         )}
+
+        <div className="my-6">
+          <SubjectGrid />
+        </div>
       </main>
     </div>
   );
