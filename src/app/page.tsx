@@ -4,7 +4,7 @@ import HomeComponent from "@/features/Home/Home";
 
 const HomePage = () => {
   return (
-    <section>
+    <section className="app-container">
       <HomeComponent />
     </section>
   );

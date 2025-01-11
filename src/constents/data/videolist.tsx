@@ -4,7 +4,6 @@ export const videosList = [
     title: "Introduction to Python Programming",
     subtitle: "Learn the basics of Python syntax and concepts",
     videoUrl: "https://www.youtube.com/watch?v=kqtD5dpn9C8",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
     category: "Programming",
     subcategory: "Python",
     unit: "Unit 1",
@@ -14,7 +13,7 @@ export const videosList = [
     title: "Advanced JavaScript Techniques",
     subtitle: "Master modern JavaScript features and patterns",
     videoUrl: "https://www.youtube.com/watch?v=R8rmfD9Y5-c",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Programming",
     subcategory: "JavaScript",
     unit: "Unit 2",
@@ -24,7 +23,7 @@ export const videosList = [
     title: "Data Visualization with D3.js",
     subtitle: "Create interactive data visualizations for the web",
     videoUrl: "https://www.youtube.com/watch?v=_8V5o2UHG0E",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Data Science",
     subcategory: "Data Visualization",
     unit: "Unit 3",
@@ -34,7 +33,7 @@ export const videosList = [
     title: "Machine Learning Fundamentals",
     subtitle: "Introduction to core ML algorithms and concepts",
     videoUrl: "https://www.youtube.com/watch?v=mwJ6wDWqOE0",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Data Science",
     subcategory: "Machine Learning",
     unit: "Unit 1",
@@ -44,7 +43,7 @@ export const videosList = [
     title: "React.js for Unit 1s",
     subtitle: "Build modern user interfaces with React",
     videoUrl: "https://www.youtube.com/watch?v=Ke90Tje7VS0",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Programming",
     subcategory: "Web Development",
     unit: "Unit 1",
@@ -54,7 +53,7 @@ export const videosList = [
     title: "Digital Marketing Strategies",
     subtitle: "Learn effective online marketing techniques",
     videoUrl: "https://www.youtube.com/watch?v=nU-IIXBWlS4",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Business",
     subcategory: "Marketing",
     unit: "Unit 3",
@@ -64,7 +63,7 @@ export const videosList = [
     title: "iOS App Development with Swift",
     subtitle: "Create native iOS applications using Swift",
     videoUrl: "https://www.youtube.com/watch?v=comQ1-x2a1Q",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Programming",
     subcategory: "Mobile Development",
     unit: "Unit 3",
@@ -74,7 +73,7 @@ export const videosList = [
     title: "Graphic Design Principles",
     subtitle: "Master the fundamentals of visual design",
     videoUrl: "https://www.youtube.com/watch?v=sByzHoiYFX0",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Design",
     subcategory: "Graphic Design",
     unit: "Unit 1",
@@ -84,7 +83,7 @@ export const videosList = [
     title: "Database Design and SQL",
     subtitle: "Learn to design and query relational databases",
     videoUrl: "https://www.youtube.com/watch?v=HXV3zeQKqGY",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Programming",
     subcategory: "Databases",
     unit: "Unit 3",
@@ -94,7 +93,7 @@ export const videosList = [
     title: "Artificial Intelligence Ethics",
     subtitle: "Explore ethical considerations in AI development",
     videoUrl: "https://www.youtube.com/watch?v=tJQSyzBUAew",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Technology",
     subcategory: "AI",
     unit: "Unit 2",
@@ -104,7 +103,7 @@ export const videosList = [
     title: "Cloud Computing Fundamentals",
     subtitle: "Introduction to cloud services and architectures",
     videoUrl: "https://www.youtube.com/watch?v=M988_fsOSWo",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Technology",
     subcategory: "Cloud Computing",
     unit: "Unit 1",
@@ -114,7 +113,7 @@ export const videosList = [
     title: "UX/UI Design Best Practices",
     subtitle: "Create user-centered designs for digital products",
     videoUrl: "https://www.youtube.com/watch?v=wIuVvCuiJhU",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Design",
     subcategory: "UX/UI",
     unit: "Unit 3",
@@ -124,7 +123,7 @@ export const videosList = [
     title: "Cybersecurity Essentials",
     subtitle: "Protect systems and networks from cyber threats",
     videoUrl: "https://www.youtube.com/watch?v=inWWhr5tnEA",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Technology",
     subcategory: "Cybersecurity",
     unit: "Unit 1",
@@ -134,7 +133,7 @@ export const videosList = [
     title: "Blockchain Technology Explained",
     subtitle: "Understand the principles behind blockchain",
     videoUrl: "https://www.youtube.com/watch?v=SSo_EIwHSd4",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Technology",
     subcategory: "Blockchain",
     unit: "Unit 3",
@@ -144,7 +143,7 @@ export const videosList = [
     title: "Content Marketing Strategies",
     subtitle: "Create and distribute valuable content for your audience",
     videoUrl: "https://www.youtube.com/watch?v=RVEfiwURsAw",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Business",
     subcategory: "Marketing",
     unit: "Unit 3",
@@ -154,7 +153,7 @@ export const videosList = [
     title: "Data Analysis with Python",
     subtitle: "Use Python for data manipulation and analysis",
     videoUrl: "https://www.youtube.com/watch?v=r-uOLxNrNk8",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Data Science",
     subcategory: "Data Analysis",
     unit: "Unit 3",
@@ -164,7 +163,7 @@ export const videosList = [
     title: "Mobile App UI Design",
     subtitle: "Design intuitive and attractive mobile app interfaces",
     videoUrl: "https://www.youtube.com/watch?v=DnKVAVlOr7A",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Design",
     subcategory: "Mobile Design",
     unit: "Unit 3",
@@ -174,7 +173,7 @@ export const videosList = [
     title: "Network Security Fundamentals",
     subtitle: "Learn the basics of securing computer networks",
     videoUrl: "https://www.youtube.com/watch?v=qiQR5rTSshw",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Technology",
     subcategory: "Cybersecurity",
     unit: "Unit 1",
@@ -184,7 +183,7 @@ export const videosList = [
     title: "Agile Project Management",
     subtitle: "Implement Agile methodologies in your projects",
     videoUrl: "https://www.youtube.com/watch?v=502ILHjX9EE",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Business",
     subcategory: "Project Management",
     unit: "Unit 3",
@@ -194,7 +193,7 @@ export const videosList = [
     title: "3D Modeling for Unit 1s",
     subtitle: "Create 3D models using industry-standard software",
     videoUrl: "https://www.youtube.com/watch?v=9xAumJRKV6A",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Design",
     subcategory: "3D Design",
     unit: "Unit 1",
@@ -204,7 +203,7 @@ export const videosList = [
     title: "Natural Language Processing",
     subtitle: "Analyze and generate human language with AI",
     videoUrl: "https://www.youtube.com/watch?v=8S3qHHUKqYk",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Data Science",
     subcategory: "NLP",
     unit: "Unit 2",
@@ -214,7 +213,7 @@ export const videosList = [
     title: "DevOps Practices and Tools",
     subtitle: "Streamline development and operations processes",
     videoUrl: "https://www.youtube.com/watch?v=Xrgk023l4lI",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Technology",
     subcategory: "DevOps",
     unit: "Unit 3",
@@ -224,7 +223,7 @@ export const videosList = [
     title: "Financial Planning for Startups",
     subtitle: "Manage finances effectively for your new business",
     videoUrl: "https://www.youtube.com/watch?v=VmMLxN4dVn4",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Business",
     subcategory: "Finance",
     unit: "Unit 3",
@@ -234,7 +233,7 @@ export const videosList = [
     title: "Game Development with Unity",
     subtitle: "Create 2D and 3D games using Unity engine",
     videoUrl: "https://www.youtube.com/watch?v=gB1F9G0JXOo",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Programming",
     subcategory: "Game Development",
     unit: "Unit 3",
@@ -244,7 +243,7 @@ export const videosList = [
     title: "Social Media Marketing",
     subtitle: "Leverage social platforms for business growth",
     videoUrl: "https://www.youtube.com/watch?v=9Yl_xjHgvzA",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Business",
     subcategory: "Marketing",
     unit: "Unit 1",
@@ -254,7 +253,7 @@ export const videosList = [
     title: "Responsive Web Design",
     subtitle: "Create websites that work on any device",
     videoUrl: "https://www.youtube.com/watch?v=srvUrASNj0s",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Design",
     subcategory: "Web Design",
     unit: "Unit 3",
@@ -264,7 +263,7 @@ export const videosList = [
     title: "Big Data Analytics",
     subtitle: "Process and analyze large datasets",
     videoUrl: "https://www.youtube.com/watch?v=zez2Tv-bcXY",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Data Science",
     subcategory: "Big Data",
     unit: "Unit 2",
@@ -274,7 +273,7 @@ export const videosList = [
     title: "Entrepreneurship 101",
     subtitle: "Learn the basics of starting and running a business",
     videoUrl: "https://www.youtube.com/watch?v=Yz751qXQpbg",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Business",
     subcategory: "Entrepreneurship",
     unit: "Unit 1",
@@ -284,7 +283,7 @@ export const videosList = [
     title: "Augmented Reality Development",
     subtitle: "Create AR experiences for mobile devices",
     videoUrl: "https://www.youtube.com/watch?v=WzfDo2Wpxks",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Technology",
     subcategory: "AR/VR",
     unit: "Unit 2",
@@ -294,7 +293,7 @@ export const videosList = [
     title: "Digital Photography Techniques",
     subtitle: "Master the art of digital photography",
     videoUrl: "https://www.youtube.com/watch?v=LD4zp8ruvaI",
-    bannerUrl: "https://res.cloudinary.com/codewithashim/image/upload/v1736595774/mgo0no7xth1bnrgiv1ll.png",
+   
     category: "Design",
     subcategory: "Photography",
     unit: "Unit 3",

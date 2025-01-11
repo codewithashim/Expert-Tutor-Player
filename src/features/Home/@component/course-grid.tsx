@@ -4,9 +4,8 @@ import { CourseCard } from "./course-card";
 
 interface Video {
   id: number;
-  title: string;
-  subtitle: string;
-  bannerUrl: string;
+  title?: string;
+  subtitle?: string;
   videoUrl: string;
 }
 

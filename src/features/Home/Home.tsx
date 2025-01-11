@@ -11,7 +11,7 @@ const ITEMS_PER_PAGE = 12;
 export default function HomeComponent() {
   const [filteredVideos, setFilteredVideos] = useState(videosList);
   const [displayedVideos, setDisplayedVideos] = useState<typeof videosList>([]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -36,14 +36,12 @@ export default function HomeComponent() {
     setIsLoading(true);
     const filtered = videosList.filter(
       (video) =>
-        (!category || video.category === category) &&
-        (!subcategory ||
-          subcategory === "All" ||
-          video.subcategory === subcategory) &&
+        (!category || category === "All" || video.category === category) &&
+        (!subcategory || video.subcategory === subcategory) &&
         (!unit || video.unit === unit)
     );
     setFilteredVideos(filtered);
-    setSelectedSubcategory("All");
+    setSelectedCategory("All");
   };
 
   const handleLoadMore = () => {
@@ -62,7 +60,7 @@ export default function HomeComponent() {
     setIsLoading(true);
     setTimeout(() => {
       setFilteredVideos(videosList);
-      setSelectedSubcategory("All");
+      setSelectedCategory("All");
       setCurrentPage(1);
       setIsLoading(false);
     }, 1000); // Simulate loading delay
@@ -71,17 +69,6 @@ export default function HomeComponent() {
   return (
     <div className="min-h-screen bg-background">
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-12 text-center">
-          <h1 className="mb-3 text-4xl font-bold tracking-tight text-[#2D2D2D]">
-            Finding Videos To <span className="text-[#4F46E5]">Learn Easy</span>
-          </h1>
-          <p className="text-lg text-[#6B7280]">
-            Over a million students watch our free videos
-            <br />
-            to help them with their homework
-          </p>
-        </div>
-
         <div className="mb-8">
           <SearchFilters onFilter={handleFilter} />
         </div>
@@ -101,24 +88,24 @@ export default function HomeComponent() {
           <div className="mb-8">
             <div className="scrollbar-hide -mx-2 flex space-x-2 overflow-x-auto px-2 pb-2">
               <Button
-                variant={selectedSubcategory === "All" ? "primary" : "outline"}
+                variant={selectedCategory === "All" ? "primary" : "outline"}
                 className="shrink-0"
-                onClick={() => setSelectedSubcategory("All")}
+                onClick={() => setSelectedCategory("All")}
               >
                 All
               </Button>
               {Array.from(
-                new Set(filteredVideos.map((video) => video.subcategory))
-              ).map((subcategory) => (
+                new Set(filteredVideos.map((video) => video.category))
+              ).map((category) => (
                 <Button
-                  key={subcategory}
+                  key={category}
                   variant={
-                    selectedSubcategory === subcategory ? "primary" : "outline"
+                    selectedCategory === category ? "primary" : "outline"
                   }
                   className="shrink-0"
-                  onClick={() => setSelectedSubcategory(subcategory)}
+                  onClick={() => setSelectedCategory(category)}
                 >
-                  {subcategory}
+                  {category}
                 </Button>
               ))}
             </div>
@@ -129,8 +116,8 @@ export default function HomeComponent() {
           <CourseGrid
             videos={displayedVideos.filter(
               (video) =>
-                selectedSubcategory === "All" ||
-                video.subcategory === selectedSubcategory
+                selectedCategory === "All" ||
+                video.category === selectedCategory
             )}
             isLoading={isLoading}
           />
