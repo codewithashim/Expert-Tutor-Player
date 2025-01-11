@@ -113,16 +113,9 @@ html {
   margin: auto;
 }
 
-/* For Webkit browsers (Chrome, Safari) */
-.container {
-  overflow: auto; /* or overflow: scroll; */
+ 
+::-webkit-scrollbar {
+  display: none !important;  
 }
 
-.container::-webkit-scrollbar {
-  display: none; /* Hide scrollbar */
-}
-
-/* For Firefox */
-.container {
-  scrollbar-width: none; /* Hide scrollbar */
-}
+ 
