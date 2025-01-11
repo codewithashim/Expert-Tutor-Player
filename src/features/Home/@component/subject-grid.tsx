@@ -23,10 +23,10 @@ export default function SubjectGrid() {
         </h1>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {subjects.map((subject) => (
+          {subjects?.map((subject) => (
             <Link 
               key={subject} 
-              href={`https://experttutor.com/tutors?subject=${encodeURIComponent(subject)}&level=All+Levels`}
+              href={`https://experttutor.com/tutors?subject=${subject}&level=All+Levels`}
             >
               <Card className="group relative flex items-center justify-between p-6 transition-all hover:shadow-md bg-gradient-to-r from-[#F8F9FF] to-white">
                 <span className="text-lg font-bold text-[#2D2D2D]">{subject}</span>
