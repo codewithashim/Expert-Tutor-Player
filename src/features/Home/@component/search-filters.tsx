@@ -70,9 +70,9 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
 
   return (
     <div className={cn("grid gap-6", className)}>
-      <div className="flex flex-col gap-8 sm:flex-row sm:items-end">
+      <div className="flex flex-col flex-wrap gap-8 sm:flex-row sm:items-end">
         {/* Category Select */}
-        <div className="w-full max-w-[310px] space-y-2">
+        <div className="flex-1 w-full md:max-w-[310px] space-y-2">
           <Label htmlFor="category" className="text-lg">
             Find Subject
           </Label>
@@ -109,7 +109,7 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
 
         {/* Subcategory Select */}
         {subcategories.length > 0 && (
-          <div className="w-full max-w-[310px] space-y-2">
+          <div className="flex-1 w-full md:max-w-[310px] space-y-2">
             <Label htmlFor="subcategory" className="text-lg">
               Levels
             </Label>
@@ -146,7 +146,7 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
 
         {/* Unit Select */}
         {units.length > 0 && (
-          <div className="w-full max-w-[310px] space-y-2">
+          <div className="flex-1 w-full md:max-w-[310px] space-y-2">
             <Label htmlFor="unit" className="text-lg">
               Unit
             </Label>
@@ -182,7 +182,7 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
 
         {/* Topic Select */}
         {topics.length > 0 && (
-          <div className="w-full max-w-[310px] space-y-2">
+          <div className="flex-1 w-full md:max-w-[310px] space-y-2">
             <Label htmlFor="topic" className="text-lg">
               Topic
             </Label>
