@@ -16,7 +16,12 @@ import { categoriesList } from "@/constents/data/category";
 import { videosList } from "@/constents/data/videolist";
 
 interface SearchFiltersProps {
-  onFilter: (category: string, subcategory: string, unit: string) => void;
+  onFilter: (
+    category: string,
+    subcategory: string,
+    unit: string,
+    topic: string
+  ) => void;
   className?: string;
 }
 
@@ -24,6 +29,7 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedUnit, setSelectedUnit] = useState("");
+  const [selectedTopic, setSelectedTopic] = useState("");
 
   const subcategories = useMemo(() => {
     const category = categoriesList.find(
@@ -33,18 +39,40 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
   }, [selectedCategory]);
 
   const units = useMemo(() => {
-    const uniqueUnits = new Set(videosList.map((video) => video.unit));
+    const filteredVideos = videosList.filter(
+      (video) =>
+        video.category === selectedCategory &&
+        video.subcategory === selectedSubcategory
+    );
+    const uniqueUnits = new Set(filteredVideos.map((video) => video.unit));
     return Array.from(uniqueUnits);
-  }, []);
+  }, [selectedCategory, selectedSubcategory]);
+
+  const topics = useMemo(() => {
+    const filteredVideos = videosList.filter(
+      (video) =>
+        video.category === selectedCategory &&
+        video.subcategory === selectedSubcategory &&
+        video.unit === selectedUnit
+    );
+    const allTopics = filteredVideos.flatMap((video) => video.topics);
+    return Array.from(new Set(allTopics));
+  }, [selectedCategory, selectedSubcategory, selectedUnit]);
 
   const handleSearch = () => {
-    onFilter(selectedCategory, selectedSubcategory, selectedUnit);
+    onFilter(
+      selectedCategory,
+      selectedSubcategory,
+      selectedUnit,
+      selectedTopic
+    );
   };
 
   return (
     <div className={cn("grid gap-6", className)}>
       <div className="flex flex-col gap-8 sm:flex-row sm:items-end">
-        <div className="flex-1 space-y-2">
+        {/* Category Select */}
+        <div className="w-full max-w-[310px] space-y-2">
           <Label htmlFor="category" className="text-lg">
             Find Subject
           </Label>
@@ -53,13 +81,15 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
             onValueChange={(value) => {
               setSelectedCategory(value);
               setSelectedSubcategory("");
+              setSelectedUnit("");
+              setSelectedTopic("");
             }}
           >
             <SelectTrigger
               id="category"
               className="h-14 bg-gray-50 text-lg border-gray-100"
             >
-              <SelectValue placeholder="Select category" />
+              <SelectValue placeholder="Select Subject" />
             </SelectTrigger>
             <SelectContent className="max-h-[300px]">
               <SelectGroup>
@@ -77,20 +107,25 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
           </Select>
         </div>
 
-        {subcategories?.length > 0 && (
-          <div className="flex-1 space-y-2">
+        {/* Subcategory Select */}
+        {subcategories.length > 0 && (
+          <div className="w-full max-w-[310px] space-y-2">
             <Label htmlFor="subcategory" className="text-lg">
-              Subcategory
+              Levels
             </Label>
             <Select
               value={selectedSubcategory}
-              onValueChange={setSelectedSubcategory}
+              onValueChange={(value) => {
+                setSelectedSubcategory(value);
+                setSelectedUnit("");
+                setSelectedTopic("");
+              }}
             >
               <SelectTrigger
                 id="subcategory"
                 className="h-14 bg-gray-50 text-lg border-gray-100"
               >
-                <SelectValue placeholder="Select subcategory" />
+                <SelectValue placeholder="Select Levels" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -109,32 +144,71 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
           </div>
         )}
 
-        <div className="flex-1 space-y-2">
-          <Label htmlFor="unit" className="text-lg">
-            Unit
-          </Label>
-          <Select value={selectedUnit} onValueChange={setSelectedUnit}>
-            <SelectTrigger
-              id="unit"
-              className="h-14 bg-gray-50 text-lg border-gray-100"
+        {/* Unit Select */}
+        {units.length > 0 && (
+          <div className="w-full max-w-[310px] space-y-2">
+            <Label htmlFor="unit" className="text-lg">
+              Unit
+            </Label>
+            <Select
+              value={selectedUnit}
+              onValueChange={(value) => {
+                setSelectedUnit(value);
+                setSelectedTopic("");
+              }}
             >
-              <SelectValue placeholder="Select unit" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {units.map((unit) => (
-                  <SelectItem
-                    key={unit}
-                    value={unit}
-                    className="text-base py-2"
-                  >
-                    {unit}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+              <SelectTrigger
+                id="unit"
+                className="h-14 bg-gray-50 text-lg border-gray-100"
+              >
+                <SelectValue placeholder="Select Unit" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {units.map((unit) => (
+                    <SelectItem
+                      key={unit}
+                      value={unit}
+                      className="text-base py-2"
+                    >
+                      {unit}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
+        {/* Topic Select */}
+        {topics.length > 0 && (
+          <div className="w-full max-w-[310px] space-y-2">
+            <Label htmlFor="topic" className="text-lg">
+              Topic
+            </Label>
+            <Select value={selectedTopic} onValueChange={setSelectedTopic}>
+              <SelectTrigger
+                id="topic"
+                className="h-14 bg-gray-50 text-lg border-gray-100"
+              >
+                <SelectValue placeholder="Select Topic" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {topics.map((topic) => (
+                    <SelectItem
+                      key={topic}
+                      value={topic}
+                      className="text-base py-2"
+                    >
+                      {topic}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
 
         <Button
           onClick={handleSearch}
