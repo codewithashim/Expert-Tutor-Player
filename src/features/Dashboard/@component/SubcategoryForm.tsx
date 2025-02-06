@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,25 +19,30 @@ interface Category {
   name: string;
 }
 
-export function SubcategoryForm({ onSubcategoryAdded }: { onSubcategoryAdded: () => void }) {
+export function SubcategoryForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const { apiCall } = useApi();
-  const { control, handleSubmit, reset, formState: { errors } } = useForm({
-    defaultValues: { name: '', category: '' }
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { name: "", category: "" },
   });
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const data = await apiCall('/api/categories');
+      const data = await apiCall("/api/categories");
       if (data) setCategories(data);
     };
     fetchCategories();
   }, [apiCall]);
 
   const onSubmit = async (data: { name: string; category: string }) => {
-    const result = await apiCall('/api/subcategories', 'POST', data);
+    const result = await apiCall("/api/subcategories", "POST", data);
     if (result) {
-      console.log('Subcategory added:', result);
+      console.log("Subcategory added:", result);
       reset();
       onSubcategoryAdded();
     }
@@ -55,33 +60,50 @@ export function SubcategoryForm({ onSubcategoryAdded }: { onSubcategoryAdded: ()
             <Controller
               name="name"
               control={control}
-              rules={{ required: 'Subcategory name is required' }}
+              rules={{ required: "Subcategory name is required" }}
               render={({ field }) => (
-                <Input {...field} id="subcategory-name" placeholder="Enter subcategory name" />
+                <Input
+                  {...field}
+                  id="subcategory-name"
+                  placeholder="Enter subcategory name"
+                />
               )}
             />
-            {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
+            {errors.name && (
+              <span className="text-red-500 text-sm">
+                {errors.name.message}
+              </span>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
             <Controller
               name="category"
               control={control}
-              rules={{ required: 'Category is required' }}
+              rules={{ required: "Category is required" }}
               render={({ field }) => (
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <SelectTrigger id="category">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
                     {categories.map((category) => (
-                      <SelectItem key={category._id} value={category._id}>{category.name}</SelectItem>
+                      <SelectItem key={category._id} value={category._id}>
+                        {category.name}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               )}
             />
-            {errors.category && <span className="text-red-500 text-sm">{errors.category.message}</span>}
+            {errors.category && (
+              <span className="text-red-500 text-sm">
+                {errors.category.message}
+              </span>
+            )}
           </div>
           <Button type="submit" className="w-full">
             Save Subcategory
@@ -91,3 +113,7 @@ export function SubcategoryForm({ onSubcategoryAdded }: { onSubcategoryAdded: ()
     </Card>
   );
 }
+function onSubcategoryAdded() {
+  throw new Error("Function not implemented.");
+}
+

@@ -38,7 +38,7 @@ interface Subcategory {
   category: string;
 }
 
-export function VideoForm({ onVideoAdded }: { onVideoAdded: () => void }) {
+export function VideoForm() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const { apiCall } = useApi();
@@ -249,3 +249,7 @@ export function VideoForm({ onVideoAdded }: { onVideoAdded: () => void }) {
     </Card>
   );
 }
+function onVideoAdded() {
+  throw new Error("Function not implemented.");
+}
+

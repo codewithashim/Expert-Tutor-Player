@@ -7,7 +7,7 @@ export default function CategoriesPage() {
       <h1 className="text-3xl font-bold tracking-tight">Categories</h1>
       <div className="grid gap-8 md:grid-cols-2">
         <CategoryList />
-        <CategoryForm />
+        <CategoryForm   />
       </div>
     </div>
   );
