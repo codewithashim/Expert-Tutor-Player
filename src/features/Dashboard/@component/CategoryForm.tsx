@@ -1,24 +1,128 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+// "use client";
+// import React from "react";
+// import { useForm, Controller } from "react-hook-form";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function CategoryForm() {
+// export function CategoryForm() {
+//   const {
+//     control,
+//     handleSubmit,
+//     formState: { errors },
+//   } = useForm({
+//     defaultValues: { name: "" },
+//   });
+
+//   const onSubmit = (data: { name: string }) => {
+//     // Here you would typically call an API to save the category
+//     console.log("Category submitted:", data);
+//     // You can add your logic here to handle the form submission
+//   };
+
+//   return (
+//     <Card>
+//       <CardHeader>
+//         <CardTitle>Add Category</CardTitle>
+//       </CardHeader>
+//       <CardContent>
+//         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+//           <div className="space-y-2">
+//             <Label htmlFor="category-name">Category Name</Label>
+//             <Controller
+//               name="name"
+//               control={control}
+//               rules={{ required: "Category name is required" }}
+//               render={({ field }) => (
+//                 <Input
+//                   {...field}
+//                   id="category-name"
+//                   placeholder="Enter category name"
+//                 />
+//               )}
+//             />
+//             {errors.name && (
+//               <span className="text-red-500 text-sm">
+//                 {errors.name.message}
+//               </span>
+//             )}
+//           </div>
+//           <Button type="submit" className="w-full">
+//             Save Category
+//           </Button>
+//         </form>
+//       </CardContent>
+//     </Card>
+//   );
+// }
+
+"use client";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useApi } from "@/hooks/useApi";
+
+export function CategoryForm({
+  onCategoryAdded,
+}: {
+  onCategoryAdded: () => void;
+}) {
+  const { apiCall } = useApi();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { name: "" },
+  });
+
+  const onSubmit = async (data: { name: string }) => {
+    const result = await apiCall("/api/categories", "POST", data);
+    console.log(result, "result======================>");
+    if (result) {
+      console.log("Category added:", result);
+      reset();
+      onCategoryAdded();
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Add/Edit Category</CardTitle>
+        <CardTitle>Add Category</CardTitle>
       </CardHeader>
       <CardContent>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="category-name">Category Name</Label>
-            <Input id="category-name" placeholder="Enter category name" />
+            <Controller
+              name="name"
+              control={control}
+              rules={{ required: "Category name is required" }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  id="category-name"
+                  placeholder="Enter category name"
+                />
+              )}
+            />
+            {errors.name && (
+              <span className="text-red-500 text-sm">
+                {errors.name.message}
+              </span>
+            )}
           </div>
-          <Button type="submit" className="w-full">Save Category</Button>
+          <Button type="submit" className="w-full">
+            Save Category
+          </Button>
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }
-

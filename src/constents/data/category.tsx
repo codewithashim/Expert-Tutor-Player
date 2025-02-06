@@ -1,54 +1,54 @@
 export const categoriesList = [
   {
-    name: "Programming",
-    subcategories: [
-      "Python",
-      "JavaScript",
-      "Web Development",
-      "Mobile Development",
-      "Databases",
-      "Game Development",
-    ],
+    name: "Math",
+    subcategories: ["National 5", "Higher"],
   },
   {
-    name: "Data Science",
-    subcategories: [
-      "Data Visualization",
-      "Machine Learning",
-      "Data Analysis",
-      "NLP",
-      "Big Data",
-    ],
+    name: "Geography",
+    subcategories: ["National 5"],
   },
   {
-    name: "Business",
-    subcategories: [
-      "Marketing",
-      "Project Management",
-      "Finance",
-      "Entrepreneurship",
-    ],
+    name: "History",
+    subcategories: ["Secondary"],
   },
   {
-    name: "Technology",
-    subcategories: [
-      "AI",
-      "Cloud Computing",
-      "Cybersecurity",
-      "Blockchain",
-      "DevOps",
-      "AR/VR",
-    ],
+    name: "Biology",
+    subcategories: ["Secondary"],
   },
   {
-    name: "Design",
-    subcategories: [
-      "Graphic Design",
-      "UX/UI",
-      "Mobile Design",
-      "3D Design",
-      "Web Design",
-      "Photography",
-    ],
+    name: "Physics",
+    subcategories: ["Secondary"],
+  },
+  {
+    name: "English",
+    subcategories: ["National 5"],
+  },
+  {
+    name: "French",
+    subcategories: ["National 5", "Secondary"],
+  },
+  {
+    name: "Art and Design",
+    subcategories: ["National 5", "Secondary"],
+  },
+  {
+    name: "Music",
+    subcategories: ["National 5"],
+  },
+  {
+    name: "Physical Education",
+    subcategories: ["Secondary"],
+  },
+  {
+    name: "Computing",
+    subcategories: ["National 5"],
+  },
+  {
+    name: "Citizenship",
+    subcategories: ["Secondary"],
+  },
+  {
+    name: "Urdu",
+    subcategories: ["Secondary"],
   },
 ];

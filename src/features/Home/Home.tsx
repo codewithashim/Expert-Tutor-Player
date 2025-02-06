@@ -106,7 +106,7 @@ export default function HomeComponent() {
         </div>
 
         {/* Results Info and Reset Button */}
-        <div className="mb-4 flex flex-col sm:flex-row justify-between items-center">
+        {/* <div className="mb-4 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm text-[#6B7280]">
             {filteredVideos.length} results found
           </p>
@@ -119,7 +119,7 @@ export default function HomeComponent() {
               Reset Filters
             </Button>
           )}
-        </div>
+        </div> */}
 
         {/* Category Buttons */}
         {filteredVideos.length > 0 && (
