@@ -27,11 +27,13 @@ interface SubcategoryFormProps {
 
 export function SubcategoryForm({ addSubcategory }: SubcategoryFormProps) {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { apiCall } = useApi();
   const {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: { name: "", category: "" },
@@ -45,11 +47,21 @@ export function SubcategoryForm({ addSubcategory }: SubcategoryFormProps) {
     fetchCategories();
   }, [apiCall]);
 
+  useEffect(() => {
+    const subscription = watch((value, { type }: any) => {
+      if (type === "reset") {
+        setSelectedCategory("");
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   const onSubmit = async (data: { name: string; category: string }) => {
     const result = await addSubcategory(data);
     if (result) {
       toast?.success("Subcategory added successfully!");
       reset();
+      setSelectedCategory(""); // Reset the selected category
     }
   };
 
@@ -88,14 +100,17 @@ export function SubcategoryForm({ addSubcategory }: SubcategoryFormProps) {
               rules={{ required: "Category is required" }}
               render={({ field }) => (
                 <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    setSelectedCategory(value);
+                  }}
+                  value={selectedCategory}
                 >
                   <SelectTrigger id="category">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map((category) => (
+                    {categories?.map((category) => (
                       <SelectItem key={category._id} value={category._id}>
                         {category.name}
                       </SelectItem>

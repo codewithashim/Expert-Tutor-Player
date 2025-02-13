@@ -3,7 +3,7 @@ import { SkeletonCard } from "@/components/Skeleton/SkeletonCard";
 import { CourseCard } from "./course-card";
 
 interface Video {
-  id: number;
+  id?: number;
   title?: string;
   subtitle?: string;
   videoUrl: string;
