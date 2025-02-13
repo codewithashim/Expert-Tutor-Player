@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -13,19 +14,26 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useApi } from "@/hooks/useApi";
+import toast from "react-hot-toast";
 
 interface Category {
   _id: string;
   name: string;
 }
 
-export function SubcategoryForm() {
+interface SubcategoryFormProps {
+  addSubcategory: (data: { name: string; category: string }) => Promise<any>;
+}
+
+export function SubcategoryForm({ addSubcategory }: SubcategoryFormProps) {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { apiCall } = useApi();
   const {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: { name: "", category: "" },
@@ -39,12 +47,21 @@ export function SubcategoryForm() {
     fetchCategories();
   }, [apiCall]);
 
+  useEffect(() => {
+    const subscription = watch((value, { type }: any) => {
+      if (type === "reset") {
+        setSelectedCategory("");
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   const onSubmit = async (data: { name: string; category: string }) => {
-    const result = await apiCall("/api/subcategories", "POST", data);
+    const result = await addSubcategory(data);
     if (result) {
-      console.log("Subcategory added:", result);
+      toast?.success("Subcategory added successfully!");
       reset();
-      onSubcategoryAdded();
+      setSelectedCategory(""); // Reset the selected category
     }
   };
 
@@ -83,14 +100,17 @@ export function SubcategoryForm() {
               rules={{ required: "Category is required" }}
               render={({ field }) => (
                 <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    setSelectedCategory(value);
+                  }}
+                  value={selectedCategory}
                 >
                   <SelectTrigger id="category">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map((category) => (
+                    {categories?.map((category) => (
                       <SelectItem key={category._id} value={category._id}>
                         {category.name}
                       </SelectItem>
@@ -113,7 +133,3 @@ export function SubcategoryForm() {
     </Card>
   );
 }
-function onSubcategoryAdded() {
-  throw new Error("Function not implemented.");
-}
-

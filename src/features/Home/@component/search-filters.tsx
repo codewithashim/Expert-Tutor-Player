@@ -12,8 +12,18 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Search } from "lucide-react";
-import { categoriesList } from "@/constents/data/category";
-import { videosList } from "@/constents/data/videolist";
+
+interface Category {
+  name: string;
+  subcategories: string[];
+}
+
+interface Video {
+  category?: string;
+  subcategory?: string;
+  unit?: string;
+  topics?: string[];
+}
 
 interface SearchFiltersProps {
   onFilter: (
@@ -22,42 +32,45 @@ interface SearchFiltersProps {
     unit: string,
     topic: string
   ) => void;
+  categories: Category[];
+  videos: Video[];
   className?: string;
 }
 
-export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
+export function SearchFilters({ onFilter, categories = [], videos = [], className }: SearchFiltersProps) {
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedUnit, setSelectedUnit] = useState("");
   const [selectedTopic, setSelectedTopic] = useState("");
 
   const subcategories = useMemo(() => {
-    const category = categoriesList.find(
-      (cat) => cat.name === selectedCategory
+    const category = categories?.find(
+      (cat) => cat?.name === selectedCategory
     );
-    return category ? category.subcategories : [];
-  }, [selectedCategory]);
+    return category?.subcategories ?? [];
+  }, [selectedCategory, categories]);
 
   const units = useMemo(() => {
-    const filteredVideos = videosList.filter(
-      (video) =>
-        video.category === selectedCategory &&
+    return Array.from(new Set(videos
+      .filter(video => 
+        video.category === selectedCategory && 
         video.subcategory === selectedSubcategory
-    );
-    const uniqueUnits = new Set(filteredVideos.map((video) => video.unit));
-    return Array.from(uniqueUnits);
-  }, [selectedCategory, selectedSubcategory]);
+      )
+      .map(video => video.unit)
+    ));
+  }, [selectedCategory, selectedSubcategory, videos]);
 
   const topics = useMemo(() => {
-    const filteredVideos = videosList.filter(
-      (video) =>
-        video.category === selectedCategory &&
+    return Array.from(new Set(videos
+      .filter(video => 
+        video.category === selectedCategory && 
         video.subcategory === selectedSubcategory &&
         video.unit === selectedUnit
-    );
-    const allTopics = filteredVideos.flatMap((video) => video.topics);
-    return Array.from(new Set(allTopics));
-  }, [selectedCategory, selectedSubcategory, selectedUnit]);
+      )
+      .flatMap(video => video.topics)
+    ));
+  }, [selectedCategory, selectedSubcategory, selectedUnit, videos]);
 
   const handleSearch = () => {
     onFilter(
@@ -66,6 +79,24 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
       selectedUnit,
       selectedTopic
     );
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+    setSelectedSubcategory("");
+    setSelectedUnit("");
+    setSelectedTopic("");
+  };
+
+  const handleSubcategoryChange = (value: string) => {
+    setSelectedSubcategory(value);
+    setSelectedUnit("");
+    setSelectedTopic("");
+  };
+
+  const handleUnitChange = (value: string) => {
+    setSelectedUnit(value);
+    setSelectedTopic("");
   };
 
   return (
@@ -78,12 +109,7 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
           </Label>
           <Select
             value={selectedCategory}
-            onValueChange={(value) => {
-              setSelectedCategory(value);
-              setSelectedSubcategory("");
-              setSelectedUnit("");
-              setSelectedTopic("");
-            }}
+            onValueChange={handleCategoryChange}
           >
             <SelectTrigger
               id="category"
@@ -93,13 +119,13 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
             </SelectTrigger>
             <SelectContent className="max-h-[300px]">
               <SelectGroup>
-                {categoriesList.map((category) => (
+                {categories?.map((category) => (
                   <SelectItem
-                    key={category.name}
-                    value={category.name}
+                    key={category?.name}
+                    value={category?.name ?? ""}
                     className="text-base py-2"
                   >
-                    {category.name}
+                    {category?.name}
                   </SelectItem>
                 ))}
               </SelectGroup>
@@ -108,18 +134,14 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
         </div>
 
         {/* Subcategory Select */}
-        {subcategories.length > 0 && (
+        {subcategories?.length > 0 && (
           <div className="flex-1 w-full md:max-w-[310px] space-y-2">
             <Label htmlFor="subcategory" className="text-lg">
               Levels
             </Label>
             <Select
               value={selectedSubcategory}
-              onValueChange={(value) => {
-                setSelectedSubcategory(value);
-                setSelectedUnit("");
-                setSelectedTopic("");
-              }}
+              onValueChange={handleSubcategoryChange}
             >
               <SelectTrigger
                 id="subcategory"
@@ -129,10 +151,10 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {subcategories.map((subcategory) => (
+                  {subcategories?.map((subcategory) => (
                     <SelectItem
                       key={subcategory}
-                      value={subcategory}
+                      value={subcategory ?? ""}
                       className="text-base py-2"
                     >
                       {subcategory}
@@ -145,17 +167,14 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
         )}
 
         {/* Unit Select */}
-        {units.length > 0 && (
+        {units?.length > 0 && (
           <div className="flex-1 w-full md:max-w-[310px] space-y-2">
             <Label htmlFor="unit" className="text-lg">
               Unit
             </Label>
             <Select
               value={selectedUnit}
-              onValueChange={(value) => {
-                setSelectedUnit(value);
-                setSelectedTopic("");
-              }}
+              onValueChange={handleUnitChange}
             >
               <SelectTrigger
                 id="unit"
@@ -165,10 +184,10 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {units.map((unit) => (
+                  {units?.map((unit) => (
                     <SelectItem
                       key={unit}
-                      value={unit}
+                      value={unit ?? ""}
                       className="text-base py-2"
                     >
                       {unit}
@@ -181,12 +200,15 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
         )}
 
         {/* Topic Select */}
-        {topics.length > 0 && (
+        {topics?.length > 0 && (
           <div className="flex-1 w-full md:max-w-[310px] space-y-2">
             <Label htmlFor="topic" className="text-lg">
               Topic
             </Label>
-            <Select value={selectedTopic} onValueChange={setSelectedTopic}>
+            <Select
+              value={selectedTopic}
+              onValueChange={setSelectedTopic}
+            >
               <SelectTrigger
                 id="topic"
                 className="h-14 bg-gray-50 text-lg border-gray-100"
@@ -195,10 +217,10 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {topics.map((topic) => (
+                  {topics?.map((topic) => (
                     <SelectItem
                       key={topic}
-                      value={topic}
+                      value={topic ?? ""}
                       className="text-base py-2"
                     >
                       {topic}

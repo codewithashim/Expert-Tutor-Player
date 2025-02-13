@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -15,6 +16,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { X } from "lucide-react";
 import { useApi } from "@/hooks/useApi";
+import toast from "react-hot-toast";
 
 interface VideoData {
   id?: string;
@@ -38,7 +40,11 @@ interface Subcategory {
   category: string;
 }
 
-export function VideoForm() {
+interface VideoFormProps {
+  addVideo: any;
+}
+
+export function VideoForm({ addVideo }: VideoFormProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const { apiCall } = useApi();
@@ -94,16 +100,11 @@ export function VideoForm() {
   const onSubmitForm = async (data: VideoData) => {
     data.topics = data.topics.filter((topic) => topic.trim() !== "");
 
-    const result = await apiCall(
-      "/api/videos",
-      "POST",
-      data as unknown as Record<string, unknown>
-    );
-    console.log( result , "result======================>");
+    const result = await addVideo(data);
     if (result) {
       console.log("Video added:", result);
+      toast.success("Video added successfully!");
       reset();
-      onVideoAdded();
     }
   };
 
@@ -156,8 +157,8 @@ export function VideoForm() {
                   </SelectTrigger>
                   <SelectContent>
                     {categories.map((category) => (
-                      <SelectItem key={category._id} value={category._id}>
-                        {category.name}
+                      <SelectItem key={category?._id} value={category?.name}>
+                        {category?.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -181,8 +182,11 @@ export function VideoForm() {
                   </SelectTrigger>
                   <SelectContent>
                     {subcategories.map((subcategory) => (
-                      <SelectItem key={subcategory._id} value={subcategory._id}>
-                        {subcategory.name}
+                      <SelectItem
+                        key={subcategory?._id}
+                        value={subcategory?.name}
+                      >
+                        {subcategory?.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -236,7 +240,7 @@ export function VideoForm() {
               type="button"
               variant="outline"
               onClick={addTopic}
-              className="my-4"
+              className="mt-2"
             >
               Add Topic
             </Button>
@@ -249,7 +253,3 @@ export function VideoForm() {
     </Card>
   );
 }
-function onVideoAdded() {
-  throw new Error("Function not implemented.");
-}
-

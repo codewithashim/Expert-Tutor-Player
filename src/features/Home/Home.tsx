@@ -4,63 +4,86 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { SearchFilters } from "./@component/search-filters";
 import { CourseGrid } from "./@component/course-grid";
-import { videosList } from "@/constents/data/videolist";
 import SubjectGrid from "./@component/subject-grid";
+import { useApi } from "@/hooks/useApi";
 
 const ITEMS_PER_PAGE = 12;
 
+interface Category {
+  name: string;
+  subcategories: string[];
+}
+
+interface Video {
+  _id: string;
+  title: string;
+  subtitle: string;
+  videoUrl: string;
+  category: string;
+  subcategory: string;
+  unit: string;
+  topics: string[];
+}
+
 export default function HomeComponent() {
-  const [filteredVideos, setFilteredVideos] = useState(videosList);
-  const [displayedVideos, setDisplayedVideos] = useState<typeof videosList>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
+  const [displayedVideos, setDisplayedVideos] = useState<Video[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { apiCall } = useApi();
 
   useEffect(() => {
-    const sendHeight = () => {
-      const height = document.body.scrollHeight;
-      window.parent.postMessage({ type: "resizeIframe", height }, "*");
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const categoriesData = await apiCall(
+          "/api/categories?format=formatted"
+        );
+        const videosData = await apiCall("/api/videos");
+        if (Array.isArray(categoriesData)) setCategories(categoriesData);
+        if (Array.isArray(videosData)) {
+          setVideos(videosData);
+          setFilteredVideos(videosData);
+        }
+      } catch (err) {
+        setError("Failed to fetch data. Please try again later.");
+        console.error("Error fetching data:", err);
+      } finally {
+        setIsLoading(false);
+      }
     };
-
-    // Send height on initial load
-    sendHeight();
-
-    // Adjust height on window resize
-    window.addEventListener("resize", sendHeight);
-
-    return () => {
-      // Cleanup the event listener on unmount
-      window.removeEventListener("resize", sendHeight);
-    };
-  }, []);
+    fetchData();
+  }, [apiCall]);
 
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      const startIndex = 0;
-      const endIndex = ITEMS_PER_PAGE;
-      setDisplayedVideos(filteredVideos.slice(startIndex, endIndex));
-      setCurrentPage(1);
-      setIsLoading(false);
-    }, 1000); // Simulate loading delay
-
-    return () => clearTimeout(timer);
+    const startIndex = 0;
+    const endIndex = ITEMS_PER_PAGE;
+    setDisplayedVideos(filteredVideos.slice(startIndex, endIndex));
+    setCurrentPage(1);
   }, [filteredVideos]);
 
   const handleFilter = (
     category: string,
     subcategory: string,
-    unit: string
+    unit: string,
+    topic: string
   ) => {
     setIsLoading(true);
-    const filtered = videosList.filter(
+    const filtered = videos.filter(
       (video) =>
         (!category || category === "All" || video.category === category) &&
         (!subcategory || video.subcategory === subcategory) &&
-        (!unit || video.unit === unit)
+        (!unit || video.unit === unit) &&
+        (!topic || video.topics?.includes(topic))
     );
     setFilteredVideos(filtered);
     setSelectedCategory("All");
+    setIsLoading(false);
   };
 
   const handleLoadMore = () => {
@@ -68,22 +91,33 @@ export default function HomeComponent() {
     const nextPage = currentPage + 1;
     const startIndex = 0;
     const endIndex = nextPage * ITEMS_PER_PAGE;
-    setTimeout(() => {
-      setDisplayedVideos(filteredVideos.slice(startIndex, endIndex));
-      setCurrentPage(nextPage);
-      setIsLoading(false);
-    }, 1000); // Simulate loading delay
+    setDisplayedVideos(filteredVideos.slice(startIndex, endIndex));
+    setCurrentPage(nextPage);
+    setIsLoading(false);
   };
 
   const handleReset = () => {
     setIsLoading(true);
-    setTimeout(() => {
-      setFilteredVideos(videosList);
-      setSelectedCategory("All");
-      setCurrentPage(1);
-      setIsLoading(false);
-    }, 1000); // Simulate loading delay
+    setFilteredVideos(videos);
+    setSelectedCategory("All");
+    setCurrentPage(1);
+    setIsLoading(false);
   };
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-xl text-red-500">{error}</p>
+        <Button
+          className="mt-4"
+          variant="primary"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="">
@@ -102,24 +136,12 @@ export default function HomeComponent() {
 
         {/* Search Filters */}
         <div className="mb-8">
-          <SearchFilters onFilter={handleFilter} />
+          <SearchFilters
+            onFilter={handleFilter}
+            categories={categories}
+            videos={videos}
+          />
         </div>
-
-        {/* Results Info and Reset Button */}
-        {/* <div className="mb-4 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-[#6B7280]">
-            {filteredVideos.length} results found
-          </p>
-          {filteredVideos.length !== videosList.length && (
-            <Button
-              variant="outline"
-              onClick={handleReset}
-              className="mt-2 sm:mt-0"
-            >
-              Reset Filters
-            </Button>
-          )}
-        </div> */}
 
         {/* Category Buttons */}
         {filteredVideos.length > 0 && (
@@ -151,14 +173,16 @@ export default function HomeComponent() {
         )}
 
         {/* Course Grid or Loading Indicator */}
-        {displayedVideos.length > 0 || isLoading ? (
+        {isLoading ? (
+          <CourseGrid videos={[]} isLoading={true} />
+        ) : displayedVideos.length > 0 ? (
           <CourseGrid
             videos={displayedVideos.filter(
               (video) =>
                 selectedCategory === "All" ||
                 video.category === selectedCategory
             )}
-            isLoading={isLoading}
+            isLoading={false}
           />
         ) : (
           <div className="text-center py-12">
