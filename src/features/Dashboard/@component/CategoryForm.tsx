@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -5,10 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useApi } from "@/hooks/useApi";
+import toast from "react-hot-toast";
 
-export function CategoryForm( ) {
-  const { apiCall } = useApi();
+interface CategoryFormProps {
+  addCategory: (data: { name: string }) => Promise<any>;
+}
+
+export function CategoryForm({ addCategory }: CategoryFormProps) {
   const {
     control,
     handleSubmit,
@@ -19,11 +23,10 @@ export function CategoryForm( ) {
   });
 
   const onSubmit = async (data: { name: string }) => {
-    const result = await apiCall("/api/categories", "POST", data);
+    const result = await addCategory(data);
     if (result) {
-      console.log("Category added:", result);
+      toast.success("Category added successfully!");
       reset();
-      onCategoryAdded();
     }
   };
 
@@ -62,7 +65,3 @@ export function CategoryForm( ) {
     </Card>
   );
 }
-function onCategoryAdded() {
-  throw new Error("Function not implemented.");
-}
-

@@ -6,7 +6,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900" suppressHydrationWarning>
       <div
         className="lg:w-64 h-full bg-white"
         style={{ width: "16rem", height: "100%" }}

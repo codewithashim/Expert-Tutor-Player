@@ -105,22 +105,6 @@ export default function HomeComponent() {
           <SearchFilters onFilter={handleFilter} />
         </div>
 
-        {/* Results Info and Reset Button */}
-        {/* <div className="mb-4 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-[#6B7280]">
-            {filteredVideos.length} results found
-          </p>
-          {filteredVideos.length !== videosList.length && (
-            <Button
-              variant="outline"
-              onClick={handleReset}
-              className="mt-2 sm:mt-0"
-            >
-              Reset Filters
-            </Button>
-          )}
-        </div> */}
-
         {/* Category Buttons */}
         {filteredVideos.length > 0 && (
           <div className="mb-8">

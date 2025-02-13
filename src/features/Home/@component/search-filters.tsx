@@ -44,7 +44,7 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
         video.category === selectedCategory &&
         video.subcategory === selectedSubcategory
     );
-    const uniqueUnits = new Set(filteredVideos.map((video) => video.unit));
+    const uniqueUnits = new Set(filteredVideos.map((video) => video?.unit));
     return Array.from(uniqueUnits);
   }, [selectedCategory, selectedSubcategory]);
 
@@ -145,7 +145,7 @@ export function SearchFilters({ onFilter, className }: SearchFiltersProps) {
         )}
 
         {/* Unit Select */}
-        {units.length > 0 && (
+        {units?.length > 0 && (
           <div className="flex-1 w-full md:max-w-[310px] space-y-2">
             <Label htmlFor="unit" className="text-lg">
               Unit

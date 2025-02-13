@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -13,13 +14,18 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useApi } from "@/hooks/useApi";
+import toast from "react-hot-toast";
 
 interface Category {
   _id: string;
   name: string;
 }
 
-export function SubcategoryForm() {
+interface SubcategoryFormProps {
+  addSubcategory: (data: { name: string; category: string }) => Promise<any>;
+}
+
+export function SubcategoryForm({ addSubcategory }: SubcategoryFormProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const { apiCall } = useApi();
   const {
@@ -40,11 +46,10 @@ export function SubcategoryForm() {
   }, [apiCall]);
 
   const onSubmit = async (data: { name: string; category: string }) => {
-    const result = await apiCall("/api/subcategories", "POST", data);
+    const result = await addSubcategory(data);
     if (result) {
-      console.log("Subcategory added:", result);
+      toast?.success("Subcategory added successfully!");
       reset();
-      onSubcategoryAdded();
     }
   };
 
@@ -113,7 +118,3 @@ export function SubcategoryForm() {
     </Card>
   );
 }
-function onSubcategoryAdded() {
-  throw new Error("Function not implemented.");
-}
-
