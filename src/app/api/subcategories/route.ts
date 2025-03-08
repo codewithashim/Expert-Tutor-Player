@@ -1,16 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
-import { Subcategory } from "@/models";
+import { Category, Subcategory } from "@/models";
 
 export async function GET(request: NextRequest) {
   await dbConnect();
   try {
     const { searchParams } = new URL(request.url);
-    const categoryId = searchParams.get("category");
-
+    const categoryName = searchParams.get("category"); // Get the category name from the query string
     let query = {};
-    if (categoryId) {
-      query = { category: categoryId };
+    if (categoryName) {
+      // Find the category by name to get its ObjectId
+      const category = await Category.findOne({ name: categoryName });
+      if (!category) {
+        return NextResponse.json(
+          { error: `Category '${categoryName}' not found` },
+          { status: 404 }
+        );
+      }
+      query = { category: category._id }; // Use the ObjectId in the query
     }
 
     const subcategories = await Subcategory.find(query).populate(
